@@ -1,7 +1,9 @@
 [theme]
-base="dark"
-primaryColor="#2AA198"     # Corpus teal
-backgroundColor="#0B0F14"  # Fondo oscuro elegante
-secondaryBackgroundColor="#10161D"
-textColor="#E6F1F3"
-font="sans serif"
+base = "light"
+
+# Colores Corpus
+primaryColor = "#3DA9FC"        # Azul claro (botones, toggles, enlaces)
+backgroundColor = "#0B1E3F"     # Azul oscuro (fondo principal)
+secondaryBackgroundColor = "#122B4A"  # Azul oscuro un poco más claro (paneles, cards)
+textColor = "#FFFFFF"           # Blanco (texto)
+font = "sans serif"
