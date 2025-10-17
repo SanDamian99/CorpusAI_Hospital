@@ -1,8 +1,18 @@
-# CorpusAI_Hospital
+# Corpus AI · Pilotos Hospitalarios (Streamlit)
 
-📦 Estructura del repositorio
+Cuatro prototipos de interfaz para Hospitales/IPS:
+- **Alta Segura 30D** (gestión del egreso y reingresos)
+- **Censo Inteligente** (mapa de camas con overlays de riesgo)
+- **Clínicas Cardio-Renales** (constructor de cohortes + KM por deciles + agenda)
+- **Dirección & ROI** (what-ifs y evidencia para contratos)
 
-'''arduino
+## Ejecutar local
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
+```bash
 corpusai_hospital/
 ├─ app.py
 ├─ README.md
@@ -26,4 +36,3 @@ corpusai_hospital/
    ├─ 2_Censo_Inteligente.py
    ├─ 3_Clinicas_CardioRenales.py
    └─ 4_Direccion_ROI.py
-'''
