@@ -1,0 +1,7 @@
+[theme]
+base="dark"
+primaryColor="#2AA198"     # Corpus teal
+backgroundColor="#0B0F14"  # Fondo oscuro elegante
+secondaryBackgroundColor="#10161D"
+textColor="#E6F1F3"
+font="sans serif"
