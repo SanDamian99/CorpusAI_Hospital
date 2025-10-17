@@ -6,12 +6,14 @@ import streamlit as st
 
 @dataclass
 class CorpusTheme:
-    primary = "#2AA198"       # teal
-    accent = "#35C1B6"        # aqua
-    warn = "#F4A261"          # amber
-    danger = "#E76F51"        # coral
-    success = "#2ECC71"       # green
-    neutral = "#AAB7C4"
+    # Paleta Corpus
+    primary = "#3DA9FC"   # Azul claro (acciones, acentos)
+    accent  = "#5FB4FF"   # Azul claro alterno (hover, detalles)
+    warn    = "#F4A261"   # Ámbar (advertencias)
+    danger  = "#E76F51"   # Coral (errores)
+    success = "#2ECC71"   # Verde (éxito)
+    neutral = "#BFD7FF"   # Azul muy claro/neutral (borders suaves)
+
 
 def get_debug() -> bool:
     # Prioridad: query param ?debug=1 -> sidebar toggle -> env var
@@ -30,17 +32,38 @@ def debug(msg: str):
         st.sidebar.markdown(f"**[DEBUG]** {msg}")
 
 def inject_css():
-    st.markdown("""
+    from .settings import CorpusTheme  # estamos en el mismo archivo, no hay ciclo
+    st.markdown(f"""
         <style>
+        :root {{
+          --corpus-primary: {CorpusTheme.primary};
+          --corpus-accent: {CorpusTheme.accent};
+          --corpus-neutral: {CorpusTheme.neutral};
+        }}
+
         /* Chips */
-        .chip { padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin-right: 6px;}
-        .chip-red { background:#E76F51; color:#0B0F14; }
-        .chip-amber { background:#F4A261; color:#0B0F14;}
-        .chip-green { background:#2ECC71; color:#0B0F14;}
-        /* Cards */
-        .kpi { border-radius:14px; padding:14px; background:#10161D; border:1px solid #1f2a33; }
-        .soft { color:#AAB7C4; }
-        .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
-        .pill { border-radius: 999px; padding: 2px 10px; border:1px solid #1f2a33;}
+        .chip {{ padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; margin-right: 6px; }}
+        .chip-red   {{ background:#E76F51; color:#0B1E3F; }}   /* texto azul oscuro para buen contraste */
+        .chip-amber {{ background:#F4A261; color:#0B1E3F; }}
+        .chip-green {{ background:#2ECC71; color:#0B1E3F; }}
+
+        /* Cards / métricas */
+        .kpi {{
+            border-radius:14px;
+            padding:14px;
+            background:#122B4A;          /* secondaryBackgroundColor */
+            border:1px solid #1E3A5F;    /* borde acorde a azul oscuro */
+        }}
+        .soft {{ color: {CorpusTheme.neutral}; }}
+        .mono {{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }}
+
+        /* Pills / bordes */
+        .pill {{
+            border-radius: 999px;
+            padding: 2px 10px;
+            border:1px solid {CorpusTheme.accent};
+        }}
         </style>
     """, unsafe_allow_html=True)
+
+
