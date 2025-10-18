@@ -22,6 +22,10 @@ st.set_page_config(
 inject_css()
 debug_toggle()
 
+from services.auth import login_required
+login_required("Corpus AI · Pilotos Hospitalarios")
+
+
 section_header("🩺 FSFB • Checkeo Ejecutivo", subtitle="Evaluación cardio-renal preventiva con explicabilidad y recomendación personalizada")
 
 tab_individual, tab_lote, tab_ayuda = st.tabs(["Evaluación individual", "Carga por lotes (CSV)", "Ayuda / Descargables"])
