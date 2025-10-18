@@ -2,10 +2,13 @@
 from __future__ import annotations
 import streamlit as st
 from services.settings import inject_css, debug_toggle, debug
+from services.auth import login_required, logout_button 
 
 st.set_page_config(page_title="Corpus AI · Pilotos Hospitalarios", page_icon="🩺", layout="wide")
 inject_css()
 debug_toggle()
+
+login_required("Corpus AI · Pilotos Hospitalarios")
 
 st.title("Corpus AI · Pilotos Hospitalarios")
 st.write("Explora 4 opciones de interfaz para Hospitales/IPS: **Alta Segura, Censo Inteligente, Clínicas Cardio-Renales y Dirección/ROI**.")
