@@ -28,7 +28,7 @@ tab_individual, tab_lote, tab_ayuda = st.tabs(["Evaluación individual", "Carga 
 
 with tab_individual:
     st.subheader("Datos del ejecutivo/a")
-    # Construir formulario con los campos más frecuentes del checkeo
+    # Formulario principal
     with st.form("exec_check_form"):
         c1, c2, c3, c4 = st.columns(4)
         age = c1.number_input("Edad (años)", 18, 100, 52)
@@ -91,7 +91,8 @@ with tab_individual:
         c1, c2 = st.columns([1.1, 1])
         with c1:
             for name, pct, text in contrib[:6]:
-                st.write(f"- **{name}** {pill(f\"{pct:+.1f} pp\", tone='info')} — {text}")
+                chip = pill(f"{pct:+.1f} pp", tone="info")
+                st.markdown(f"- **{name}** {chip} — {text}", unsafe_allow_html=True)
         with c2:
             st.info("Interpretación: valores positivos aumentan el riesgo; negativos lo reducen. Sugerimos centrar la educación y el plan personalizado en los 3–5 principales impulsores modificables.")
 
@@ -125,8 +126,13 @@ with tab_lote:
         out_rows = []
         for _, r in df.iterrows():
             risk, s_df, meta = compute_risk_and_survival(r.to_dict(), horizon_months=24)
-            out_rows.append({**r.to_dict(), "risk_pct_24m": np.round(risk,1), "risk_tier_24m": risk_tier(risk),
-                             "peak_start_m": meta["peak_window"][0], "peak_end_m": meta["peak_window"][1]})
+            out_rows.append({
+                **r.to_dict(),
+                "risk_pct_24m": np.round(risk,1),
+                "risk_tier_24m": risk_tier(risk),
+                "peak_start_m": meta["peak_window"][0],
+                "peak_end_m": meta["peak_window"][1]
+            })
         out = pd.DataFrame(out_rows)
         st.dataframe(out, use_container_width=True)
 
