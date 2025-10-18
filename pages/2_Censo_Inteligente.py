@@ -12,6 +12,10 @@ from services.settings import inject_css, debug_toggle, debug
 st.set_page_config(page_title="Censo Inteligente", page_icon="🛏️", layout="wide")
 inject_css(); debug_toggle()
 
+from services.auth import login_required
+login_required("Corpus AI · Pilotos Hospitalarios")
+
+
 st.header("🛏️ Censo Inteligente")
 uploaded = st.file_uploader("Sube CSV de censo (opcional). Si omites, se usa dataset dummy.", type=["csv"])
 df = load_csv(uploaded)
