@@ -21,6 +21,8 @@ st.set_page_config(
 
 inject_css()
 debug_toggle()
+from services.auth import login_required
+login_required("Corpus AI · Pilotos Hospitalarios")
 
 section_header("👥 FSFB • Gestión Humana (Empleados)", subtitle="Prevención y bienestar con enfoque poblacional y privacidad por diseño")
 
