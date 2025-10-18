@@ -11,6 +11,9 @@ from services.settings import inject_css, debug, debug_toggle
 
 st.set_page_config(page_title="Alta Segura 30D", page_icon="✅", layout="wide")
 inject_css(); debug_toggle()
+from services.auth import login_required
+login_required("Corpus AI · Pilotos Hospitalarios")
+
 
 st.header("✅ Alta Segura 30D")
 uploaded = st.file_uploader("Sube CSV de egresos (opcional). Si omites, se usa dataset dummy.", type=["csv"])
