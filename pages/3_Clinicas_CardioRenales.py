@@ -13,6 +13,10 @@ from services.settings import inject_css, debug_toggle, debug
 st.set_page_config(page_title="Clínicas Cardio-Renales", page_icon="🫀", layout="wide")
 inject_css(); debug_toggle()
 
+from services.auth import login_required
+login_required("Corpus AI · Pilotos Hospitalarios")
+
+
 st.header("🫀 Clínicas Cardio-Renales (Seguimiento Intensivo)")
 uploaded = st.file_uploader("Sube CSV (opcional). Si omites, se usa dataset dummy.", type=["csv"])
 df = load_csv(uploaded)
