@@ -4,6 +4,7 @@ import io
 import numpy as np
 import pandas as pd
 import streamlit as st
+import plotly.express as px
 
 from services.settings import inject_css, debug_toggle, debug, CorpusTheme
 from services.risk_engine import (
@@ -46,7 +47,7 @@ if apply:
         df = df[df["sex"]==sex]
     df = df[(df["age"]>=age_min) & (df["age"]<=age_max)]
 
-# Agregados: calculamos riesgo a 24m por fila si no existe
+# Agregados: riesgo a 24m si no existe
 if "risk_pct_24m" not in df.columns:
     risks = []
     for _, r in df.iterrows():
@@ -64,12 +65,13 @@ else:
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("Empleados analizados", df.shape[0])
     c2.metric("Riesgo medio (24m)", f"{df['risk_pct_24m'].mean():.1f}%")
-    c3.metric("Alto riesgo", (df["risk_tier_24m"]=="alto").mean()*100, help="% de la cohorte")
-    c4.metric("Medio riesgo", (df["risk_tier_24m"]=="medio").mean()*100, help="% de la cohorte")
+    c3.metric("Alto riesgo", f"{(df['risk_tier_24m']=='alto').mean()*100:.1f}%")
+    c4.metric("Medio riesgo", f"{(df['risk_tier_24m']=='medio').mean()*100:.1f}%")
 
     st.markdown("### Distribución de riesgo (24 meses)")
-    hist = df["risk_pct_24m"].plot(kind="hist", bins=20, title="Histograma de riesgo (24m)")
-    st.pyplot(hist.get_figure(), clear_figure=True)
+    fig = px.histogram(df, x="risk_pct_24m", nbins=20, title="Histograma de riesgo (24m)")
+    fig.update_layout(template="plotly_dark", xaxis_title="Riesgo (%)", yaxis_title="Frecuencia")
+    st.plotly_chart(fig, use_container_width=True)
 
     # Tabla priorizada
     st.markdown("### Lista priorizada (top 50 por riesgo)")
@@ -109,6 +111,5 @@ if st.button("Consultar empleado", use_container_width=True):
 
     st.markdown("**Principales impulsores del riesgo**")
     for name, pct, text in contrib[:6]:
-        st.write(f"- **{name}** — {pct:+.1f} pp · {text}")
-
+        st.markdown(f"- **{name}** — {pct:+.1f} pp · {text}")
     st.info("Recomendación para Gestión Humana: canaliza a programas de bienestar y prevención (nutrición, actividad física, control de HTA/DM, cesación de tabaco), priorizando empleados en riesgo **alto** y **medio** según impulsores modificables.")
